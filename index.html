@@ -1021,9 +1021,11 @@
         <span class="logo-badge">LIVE NATION</span>
         <span class="logo-text">MALAYSIA</span>
       </a>
-      <div class="country-selector">
-        <i class="fa-solid fa-globe"></i>
-        <span>MY / EN</span>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="country-selector">
+          <i class="fa-solid fa-globe"></i>
+          <span>MY / EN</span>
+        </div>
       </div>
     </div>
   </header>
@@ -1042,21 +1044,21 @@
       </div>
 
       <div class="event-info">
-        <span class="event-tag"><i class="fa-solid fa-sparkles"></i> Concert Tour 2026</span>
-        <h1 class="event-title">BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR</h1>
+        <span class="event-tag" id="displayEventTag"><i class="fa-solid fa-sparkles"></i> Concert Tour 2026</span>
+        <h1 class="event-title" id="displayEventTitle">BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR</h1>
         
         <div class="event-details-meta">
           <div class="meta-item">
             <i class="fa-regular fa-calendar"></i>
-            <span>Saturday & Sunday, 12 - 13 Dec 2026</span>
+            <span id="displayEventDates">Saturday & Sunday, 12 - 13 Dec 2026</span>
           </div>
           <div class="meta-item">
             <i class="fa-solid fa-location-dot"></i>
-            <span>TM Stadium Nasional, Bukit Jalil, Kuala Lumpur</span>
+            <span id="displayEventVenue">TM Stadium Nasional, Bukit Jalil, Kuala Lumpur</span>
           </div>
           <div class="meta-item">
             <i class="fa-regular fa-clock"></i>
-            <span>Show starts at 8:00 PM (Doors open 5:00 PM)</span>
+            <span id="displayEventTimes">Show starts at 8:00 PM (Doors open 5:00 PM)</span>
           </div>
         </div>
 
@@ -1090,13 +1092,13 @@
     <!-- TICKETS TAB CONTENT -->
     <div id="tab-content-tickets" class="tab-content active">
       <div class="section-header">
-        <h2 class="section-title"><i class="fa-solid fa-tags" style="color: var(--ln-red);"></i> Daftar Harga Tiket BTS Resmi</h2>
-        <p class="section-subtitle">BTS WORLD TOUR 'ARIRANG' Kuala Lumpur 2026 | TM Stadium Nasional, Bukit Jalil, Kuala Lumpur</p>
+        <h2 class="section-title"><i class="fa-solid fa-tags" style="color: var(--ln-red);"></i> <span id="displaySectionTitle">Daftar Harga Tiket BTS Resmi</span></h2>
+        <p class="section-subtitle" id="displaySectionSubtitle">BTS WORLD TOUR 'ARIRANG' Kuala Lumpur 2026 | TM Stadium Nasional, Bukit Jalil, Kuala Lumpur</p>
       </div>
 
       <div class="tickets-layout">
         <!-- Ticket Categories List -->
-        <div class="ticket-list">
+        <div class="ticket-list" id="displayTicketList">
 
           <!-- 1. Soundcheck VIP Package -->
           <div class="ticket-item item-vip">
@@ -1303,40 +1305,42 @@
           <h3><i class="fa-solid fa-calendar-check"></i> Show Schedule</h3>
           <div class="schedule-item">
             <span class="schedule-label">Gate / Security Open</span>
-            <span class="schedule-val">03:00 PM</span>
+            <span class="schedule-val" id="displayScheduleGate">03:00 PM</span>
           </div>
           <div class="schedule-item">
             <span class="schedule-label">VIP Soundcheck Access</span>
-            <span class="schedule-val">04:30 PM</span>
+            <span class="schedule-val" id="displayScheduleSoundcheck">04:30 PM</span>
           </div>
           <div class="schedule-item">
             <span class="schedule-label">Stadium Doors Open</span>
-            <span class="schedule-val">05:00 PM</span>
+            <span class="schedule-val" id="displayScheduleDoors">05:00 PM</span>
           </div>
           <div class="schedule-item">
             <span class="schedule-label">Main Concert Starts</span>
-            <span class="schedule-val">08:00 PM</span>
+            <span class="schedule-val" id="displayScheduleConcert">08:00 PM</span>
           </div>
         </div>
 
         <div class="info-card">
           <h3><i class="fa-solid fa-train-subway"></i> Venue & Transport</h3>
-          <p><strong>Venue:</strong> TM Stadium Nasional Bukit Jalil, Kuala Lumpur, Malaysia.</p>
-          <p><strong>Public Transport:</strong> LRT Sri Petaling Line ke <strong>Stesen LRT Bukit Jalil</strong> (hanya 200m berjalan kaki).</p>
-          <p><strong>Parking:</strong> Parkir Zon A, B, dan C Bukit Jalil (disarankan datang awal).</p>
+          <p><strong>Venue:</strong> <span id="displayVenueDesc">TM Stadium Nasional Bukit Jalil, Kuala Lumpur, Malaysia.</span></p>
+          <p><strong>Public Transport:</strong> <span id="displayTransportDesc">LRT Sri Petaling Line ke <strong>Stesen LRT Bukit Jalil</strong> (hanya 200m berjalan kaki).</span></p>
+          <p><strong>Parking:</strong> <span id="displayParkingDesc">Parkir Zon A, B, dan C Bukit Jalil (disarankan datang awal).</span></p>
         </div>
 
         <div class="info-card">
           <h3><i class="fa-solid fa-ban"></i> Prohibited Items</h3>
-          <p>• Kamera DSLR/Mirrorless, lensa tele/zoom, drone, dan tongsis / tripod.</p>
-          <p>• Minuman/makanan dari luar, botol kaca, kaleng, dan senjata tajam.</p>
-          <p>• Banner atau lightstick non-resmi berukuran melebihi A4.</p>
+          <div id="displayProhibited" style="white-space: pre-line; line-height: 1.7; font-size: 0.88rem; color: #cbd5e1;">
+• Kamera DSLR/Mirrorless, lensa tele/zoom, drone, dan tongsis / tripod.
+• Minuman/makanan dari luar, botol kaca, kaleng, dan senjata tajam.
+• Banner atau lightstick non-resmi berukuran melebihi A4.
+          </div>
         </div>
 
         <div class="info-card">
           <h3><i class="fa-solid fa-headset"></i> Customer Service</h3>
           <p>Untuk pertanyaan mengenai pemesanan tiket resmi dan bantuan informasi:</p>
-          <p><strong>WhatsApp Support:</strong> -</p>
+          <p><strong>WhatsApp Support:</strong> <span id="displayWaContact">+62 856-9652-5184</span></p>
         </div>
 
       </div>
@@ -1448,14 +1452,145 @@
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Help & FAQ</a></li>
       </ul>
-      <p>© 2026 Live Nation Malaysia. All rights reserved. BTS WORLD TOUR 'ARIRANG' OFFICIAL TICKETING.</p>
+      <p id="displayFooterCopyright">© 2026 Live Nation Malaysia. All rights reserved. BTS WORLD TOUR 'ARIRANG' OFFICIAL TICKETING.</p>
     </div>
   </footer>
+
+  <!-- Include Site Config Manager -->
+  <script src="bts_site_config.js"></script>
 
   <script>
     let currentTicketName = '';
     let currentTicketPrice = '';
     let selectedSeatNumber = '';
+    let siteConfig = null;
+
+    // Load and Apply Site Configuration from Storage
+    function applySiteConfig() {
+      siteConfig = getSiteConfig();
+
+      if (siteConfig.general) {
+        const g = siteConfig.general;
+        if (g.siteTitle) document.title = g.siteTitle;
+        if (g.eventTag && document.getElementById('displayEventTag')) {
+          document.getElementById('displayEventTag').innerHTML = `<i class="fa-solid fa-sparkles"></i> ${escapeHtml(g.eventTag)}`;
+        }
+        if (g.eventTitle && document.getElementById('displayEventTitle')) {
+          document.getElementById('displayEventTitle').innerText = g.eventTitle;
+        }
+        if (g.eventDates && document.getElementById('displayEventDates')) {
+          document.getElementById('displayEventDates').innerText = g.eventDates;
+        }
+        if (g.eventVenue && document.getElementById('displayEventVenue')) {
+          document.getElementById('displayEventVenue').innerText = g.eventVenue;
+        }
+        if (g.eventTimes && document.getElementById('displayEventTimes')) {
+          document.getElementById('displayEventTimes').innerText = g.eventTimes;
+        }
+        if (g.sectionTitle && document.getElementById('displaySectionTitle')) {
+          document.getElementById('displaySectionTitle').innerText = g.sectionTitle;
+        }
+        if (g.sectionSubtitle && document.getElementById('displaySectionSubtitle')) {
+          document.getElementById('displaySectionSubtitle').innerText = g.sectionSubtitle;
+        }
+
+        // Info tab items
+        if (g.infoScheduleGate && document.getElementById('displayScheduleGate')) {
+          document.getElementById('displayScheduleGate').innerText = g.infoScheduleGate;
+        }
+        if (g.infoScheduleSoundcheck && document.getElementById('displayScheduleSoundcheck')) {
+          document.getElementById('displayScheduleSoundcheck').innerText = g.infoScheduleSoundcheck;
+        }
+        if (g.infoScheduleDoors && document.getElementById('displayScheduleDoors')) {
+          document.getElementById('displayScheduleDoors').innerText = g.infoScheduleDoors;
+        }
+        if (g.infoScheduleConcert && document.getElementById('displayScheduleConcert')) {
+          document.getElementById('displayScheduleConcert').innerText = g.infoScheduleConcert;
+        }
+        if (g.infoVenueDesc && document.getElementById('displayVenueDesc')) {
+          document.getElementById('displayVenueDesc').innerText = g.infoVenueDesc;
+        }
+        if (g.infoTransportDesc && document.getElementById('displayTransportDesc')) {
+          document.getElementById('displayTransportDesc').innerText = g.infoTransportDesc;
+        }
+        if (g.infoParkingDesc && document.getElementById('displayParkingDesc')) {
+          document.getElementById('displayParkingDesc').innerText = g.infoParkingDesc;
+        }
+        if (g.infoProhibited && document.getElementById('displayProhibited')) {
+          document.getElementById('displayProhibited').innerText = g.infoProhibited;
+        }
+        if (g.waNumber && document.getElementById('displayWaContact')) {
+          document.getElementById('displayWaContact').innerText = '+' + g.waNumber;
+        }
+        if (g.footerCopyright && document.getElementById('displayFooterCopyright')) {
+          document.getElementById('displayFooterCopyright').innerText = g.footerCopyright;
+        }
+      }
+
+      // Render Dynamic Tickets List
+      if (siteConfig.tickets && siteConfig.tickets.length > 0) {
+        renderTicketCards(siteConfig.tickets);
+      }
+    }
+
+    function renderTicketCards(tickets) {
+      const container = document.getElementById('displayTicketList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      tickets.forEach(ticket => {
+        const item = document.createElement('div');
+        item.className = 'ticket-item ' + (ticket.isVip ? 'item-vip' : ('item-' + (ticket.id || 'cat')));
+
+        const vipBadge = ticket.isVip ? `<span class="vip-tag-icon"><i class="fa-solid fa-crown"></i> VIP</span>` : '';
+        const desc2Html = ticket.desc2 ? `<span>${escapeHtml(ticket.desc2)}</span>` : '';
+
+        item.innerHTML = `
+          <div class="ticket-left">
+            <div class="ticket-cat-badge">
+              <span class="color-dot" style="background-color: ${ticket.badgeColor || '#e10600'};"></span>
+              ${escapeHtml(ticket.name)}
+              ${vipBadge}
+            </div>
+            <div class="ticket-type-desc">
+              <span>${escapeHtml(ticket.desc1)}</span>
+              ${desc2Html}
+            </div>
+          </div>
+          <div class="ticket-right">
+            <div class="ticket-price-box">
+              <div class="price-label">Harga Resmi</div>
+              <div class="ticket-price">${escapeHtml(ticket.price)}</div>
+            </div>
+            <button class="btn-select" onclick="openBookingForm('${escapeJsString(ticket.name)}', '${escapeJsString(ticket.price)}', '${escapeJsString(ticket.key)}')">Select</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeJsString(str) {
+      if (!str) return '';
+      return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+
+    // Run apply configuration on DOM load + Track Visitor
+    window.addEventListener('DOMContentLoaded', () => {
+      applySiteConfig();
+      if (typeof trackVisitor === 'function') {
+        trackVisitor();
+      }
+    });
 
     // Data Blok Kursi Sesuai Denah Seating Plan Resmi Gambar
     const seatingBlocksData = {
@@ -1588,6 +1723,10 @@
         document.getElementById('tab-content-info').classList.add('active');
       }
 
+      if (typeof trackUserClick === 'function') {
+        trackUserClick("Buka Tab", "Melihat Tab " + (tabName === 'tickets' ? 'Daftar Tiket' : 'Informasi & FAQ Konser'));
+      }
+
       const tabWrapper = document.querySelector('.tab-bar-wrapper');
       if (window.scrollY < 200) {
         tabWrapper.scrollIntoView({ behavior: 'smooth' });
@@ -1607,6 +1746,10 @@
       currentTicketName = ticketName;
       currentTicketPrice = ticketPrice;
       selectedSeatNumber = '';
+
+      if (typeof trackUserClick === 'function') {
+        trackUserClick("Pilih Tiket: " + ticketName, "Harga: " + ticketPrice + " (" + categoryKey + ")");
+      }
 
       document.getElementById('badgeTicketName').innerText = 'Tiket 1: ' + ticketName + ' (SEATING)';
       document.getElementById('badgeTicketPrice').innerText = ticketPrice;
@@ -1653,6 +1796,10 @@
             selectedSeatNumber = fullSeatCode;
             document.getElementById('selectedSeatLabel').innerText = 'Kursi: ' + fullSeatCode;
             document.getElementById('selectedSeatLabel').style.color = '#10b981';
+
+            if (typeof trackUserClick === 'function') {
+              trackUserClick("Pilih Kursi", fullSeatCode + " (" + currentTicketName + ")");
+            }
           };
         }
         container.appendChild(btn);
@@ -1675,11 +1822,14 @@
       const tglLahir = document.getElementById('formTglLahir').value;
       const gender = document.getElementById('formGender').value;
 
-      const waNumber = "6285696525184"; // Nomor WhatsApp tujuan 085696525184
+      const cfg = getSiteConfig();
+      const waNumber = (cfg && cfg.general && cfg.general.waNumber) ? cfg.general.waNumber : "6285696525184";
+      const eventTitle = (cfg && cfg.general && cfg.general.eventTitle) ? cfg.general.eventTitle : "BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR";
+      const eventVenue = (cfg && cfg.general && cfg.general.eventVenue) ? cfg.general.eventVenue : "TM Stadium Nasional Bukit Jalil, Kuala Lumpur";
 
       const message = 
-`*DETAIL PESERTA TIKET BTS WORLD TOUR 'ARIRANG' 2026*
-TM Stadium Nasional Bukit Jalil, Kuala Lumpur
+`*DETAIL PESERTA TIKET ${eventTitle}*
+${eventVenue}
 ---------------------------------------
 🎫 *Tiket 1:* ${currentTicketName} (SEATING)
 💰 *Harga:* ${currentTicketPrice}
@@ -1693,7 +1843,32 @@ TM Stadium Nasional Bukit Jalil, Kuala Lumpur
 • *Tanggal Lahir:* ${tglLahir}
 • *Jenis Kelamin:* ${gender}
 ---------------------------------------
-Halo admin, saya ingin konfirmasi pemesanan tiket di atas. Mohon info nomor rekening / pembayaran resmi. Terima kasih!`;
+      // Save order record to Admin Data
+      const newOrderId = 'GTC-' + Math.floor(10000 + Math.random() * 90000);
+      const now = new Date();
+      const orderDateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      
+      let priceNum = 0;
+      if (currentTicketPrice) {
+        const clean = currentTicketPrice.replace(/[^\d]/g, '');
+        priceNum = parseInt(clean, 10) * 1000 || 1500000;
+      }
+
+      saveOrder({
+        id: newOrderId,
+        date: orderDateStr,
+        customerName: nama,
+        phone: noHp,
+        email: email,
+        ktp: ktp,
+        ticketName: currentTicketName,
+        seat: selectedSeatNumber,
+        priceFormatted: currentTicketPrice,
+        priceNumber: priceNum,
+        status: "PENDING"
+      });
+
+      trackUserClick("Submit Pemesanan Tiket WA", `${currentTicketName} (${selectedSeatNumber}) oleh ${nama} (${newOrderId})`);
 
       const encodedMessage = encodeURIComponent(message);
       const waUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
