@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Kelola Admin | Global Ticket Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #e11d48;
+      --primary-dark: #be123c;
+      --primary-soft: #ffe4e6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --green: #10b981;
+      --green-soft: #d1fae5;
+      --orange: #f97316;
+      --orange-soft: #ffedd5;
+      --blue: #2563eb;
+      --blue-soft: #dbeafe;
+      --purple: #8b5cf6;
+      --radius: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Container styled mobile-first & responsive like modern app */
+    .app-viewport {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #ffffff;
+      box-shadow: 0 0 40px rgba(0,0,0,0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 900px) {
+      .app-viewport {
+        max-width: 820px;
+        margin: 20px auto;
+        border-radius: 28px;
+        overflow: hidden;
+        min-height: calc(100vh - 40px);
+        border: 1px solid var(--border);
+      }
+    }
+
+    /* Top App Header exactly as in photo */
+    .app-header {
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #be123c;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 10px rgba(190, 18, 60, 0.25);
+    }
+
+    .brand-meta h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .brand-meta p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .btn-icon-logout {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon-logout:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Action bar under header (Ekspor CSV & Lihat Web) */
+    .action-button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 1rem 1.25rem 0.5rem;
+    }
+
+    .btn-top-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-green {
+      background: #15803d;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
+    }
+
+    .btn-green:hover {
+      background: #166534;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .btn-outline:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    /* 4 Summary Stats Cards Grid (Total Transaksi, Pendapatan, Tiket Terjual, Menunggu Bayar) */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 0.8rem 1.25rem 1.2rem;
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 18px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 128px;
+      position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      background: #ffffff;
+    }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .stat-label {
+      font-size: 0.73rem;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .stat-icon-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .stat-val {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 0.6rem;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-sub {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* Pill Navigation Horizontal Scroll Tab Bar */
+    .nav-pill-wrapper {
+      padding: 0.4rem 1.25rem 0.8rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-pill-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 6px;
+      white-space: nowrap;
+    }
+
+    .tab-item-btn {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s;
+    }
+
+    .tab-item-btn:hover {
+      color: var(--text-main);
+      background: #f1f5f9;
+    }
+
+    .tab-item-btn.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* Content Panes */
+    .tab-panel-container {
+      padding: 0 1.25rem 3rem;
+      flex: 1;
+    }
+
+    /* Filter Box for Orders Tab (exactly like image) */
+    .search-filter-card {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .filter-input {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.7rem 1rem 0.7rem 2.5rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .filter-select {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+      margin-bottom: 12px;
+      font-family: inherit;
+    }
+
+    .filter-btn-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-filter-submit {
+      flex: 1;
+      background: #be123c;
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-filter-submit:hover {
+      background: #9f1239;
+    }
+
+    .btn-filter-reset {
+      background: #e2e8f0;
+      color: #475569;
+      border: none;
+      padding: 0.75rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    /* Orders Item Card */
+    .order-item-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1rem;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: box-shadow 0.2s;
+    }
+
+    .order-item-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .order-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .order-id-badge {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-paid {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .status-pending {
+      background: #ffedd5;
+      color: #c2410c;
+    }
+
+    .status-cancel {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .order-details-meta {
+      font-size: 0.83rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .order-actions-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed #f1f5f9;
+    }
+
+    .btn-order-action {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-order-action.paid {
+      border-color: #86efac;
+      color: #166534;
+      background: #f0fdf4;
+    }
+
+    /* Visitor & Click Tracker View */
+    .traffic-overview-box {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 10px 25px rgba(49, 46, 129, 0.25);
+    }
+
+    .log-list-container {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .log-row-item {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+    }
+
+    .log-row-item:last-child {
+      border-bottom: none;
+    }
+
+    .log-action-tag {
+      font-weight: 700;
+      color: #0f172a;
+      display: block;
+    }
+
+    .log-time-tag {
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    /* Ticket Pricing Editor Tab */
+    .ticket-edit-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1rem;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .input-clean {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.88rem;
+      outline: none;
+      font-family: inherit;
+      margin-top: 4px;
+      background: #f8fafc;
+    }
+
+    .input-clean:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* Floating Save Bar */
+    .bottom-save-pill {
+      position: sticky;
+      bottom: 15px;
+      margin: 1rem 1.25rem;
+      background: #1e293b;
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 0.85rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      z-index: 40;
+    }
+
+    .btn-save-glow {
+      background: #be123c;
+      color: #ffffff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Login Screen Modal/Card */
+    .login-container-card {
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .login-logo-box {
+      width: 64px;
+      height: 64px;
+      background: #be123c;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 800;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 20px rgba(190, 18, 60, 0.3);
+    }
+
+    .toast-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast-popup">
+    <i class="fa-solid fa-circle-check" style="color: #4ade80;"></i>
+    <span id="toastMsg">Data berhasil diperbarui!</span>
+  </div>
+
+  <div class="app-viewport">
+
+    <!-- VIEW 1: LOGIN -->
+    <div id="loginScreen" class="login-container-card">
+      <div class="login-logo-box">GTC</div>
+      <h2 style="font-size: 1.4rem; font-weight: 800; color: #0f172a; margin-bottom: 0.3rem;">Panel Kelola Admin</h2>
+      <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 2rem;">Global Ticket Center & BTS World Tour Manager</p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)" style="text-align: left; max-width: 380px; margin: 0 auto;">
+        <div style="margin-bottom: 1.1rem;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 4px; display: block;">Username Admin</label>
+          <input type="text" class="input-clean" id="loginUser" placeholder="Masukkan username" required autocomplete="username" style="padding: 0.75rem 1rem;">
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 4px; display: block;">Password</label>
+          <input type="password" class="input-clean" id="loginPass" placeholder="Masukkan password" required autocomplete="current-password" style="padding: 0.75rem 1rem;">
+        </div>
+
+        <button type="submit" class="btn-top-action btn-green" style="width: 100%; padding: 0.85rem; font-size: 0.95rem; background: #be123c;">
+          <i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard
+        </button>
+
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: #94a3b8; background: #f8fafc; padding: 0.8rem; border-radius: 10px; border: 1px dashed #cbd5e1;">
+          Default Login: User <code>admin</code> | Sandi <code>admin123@bts</code>
+        </div>
+      </form>
+    </div>
+
+    <!-- VIEW 2: MAIN DASHBOARD -->
+    <div id="dashboardScreen" style="display: none; flex-direction: column; flex: 1;">
+
+      <!-- Header (Persis Foto: GTC | Panel Kelola Admin | Global Ticket Center | Tombol Logout) -->
+      <header class="app-header">
+        <div class="header-brand">
+          <div class="logo-avatar">GTC</div>
+          <div class="brand-meta">
+            <h1>Panel Kelola Admin</h1>
+            <p>Global Ticket Center</p>
+          </div>
+        </div>
+        <button type="button" class="btn-icon-logout" onclick="handleLogout()" title="Keluar Admin">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </header>
+
+      <!-- Action Button Row (Ekspor CSV & Lihat Web) -->
+      <div class="action-button-row">
+        <button type="button" class="btn-top-action btn-green" onclick="exportOrdersToCSV()">
+          <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+        </button>
+        <a href="index.html" target="_blank" class="btn-top-action btn-outline">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Web
+        </a>
+      </div>
+
+      <!-- 4 Statistics Summary Cards (Persis Tata Letak Foto) -->
+      <section class="stats-grid">
+        <!-- 1. Total Transaksi -->
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">TOTAL<br>TRANSAKSI</span>
+            <div class="stat-icon-pill" style="background: #ffe4e6; color: #e11d48;">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+          </div>
+          <div>
+            <div class="stat-val" id="statTotalOrders">0</div>
+            <div class="stat-sub">Keseluruhan Pesanan</div>
+          </div>
+        </div>
+
+        <!-- 2. Pendapatan (Paid) -->
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">PENDAPATAN<br>(PAID)</span>
+            <div class="stat-icon-pill" style="background: #dcfce7; color: #16a34a;">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+          </div>
+          <div>
+            <div class="stat-val" id="statRevenue" style="color: #15803d; font-size: 1.15rem;">Rp0</div>
+            <div class="stat-sub">Total Dana Masuk</div>
+          </div>
+        </div>
+
+        <!-- 3. Tiket Terjual -->
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">TIKET TERJUAL</span>
+            <div class="stat-icon-pill" style="background: #e0f2fe; color: #0284c7;">
+              <i class="fa-solid fa-ticket"></i>
+            </div>
+          </div>
+          <div>
+            <div class="stat-val"><span id="statTicketsSold">0</span> <span style="font-size: 0.9rem; font-weight: 600; color: #64748b;">Pcs</span></div>
+            <div class="stat-sub">Tiket Lunas</div>
+          </div>
+        </div>
+
+        <!-- 4. Menunggu Bayar -->
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-label">MENUNGGU<br>BAYAR</span>
+            <div class="stat-icon-pill" style="background: #ffedd5; color: #ea580c;">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+          </div>
+          <div>
+            <div class="stat-val" id="statPendingOrders" style="color: #ea580c;">0</div>
+            <div class="stat-sub">Status Pending</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Horizontal Pill Nav Bar Tabs (Transaksi | Pengunjung & Klik | Harga Tiket | Rekening & QR | Pengaturan Web) -->
+      <div class="nav-pill-wrapper">
+        <div class="nav-pill-bar">
+          <button type="button" class="tab-item-btn active" id="tabBtnOrders" onclick="switchTabPane('orders')">
+            <i class="fa-solid fa-list-check"></i> Transaksi
+          </button>
+          <button type="button" class="tab-item-btn" id="tabBtnAnalytics" onclick="switchTabPane('analytics')">
+            <i class="fa-solid fa-chart-line"></i> Pengunjung & Klik
+          </button>
+          <button type="button" class="tab-item-btn" id="tabBtnPricing" onclick="switchTabPane('pricing')">
+            <i class="fa-solid fa-tags"></i> Harga Tiket
+          </button>
+          <button type="button" class="tab-item-btn" id="tabBtnBank" onclick="switchTabPane('bank')">
+            <i class="fa-solid fa-qrcode"></i> Rekening & QR
+          </button>
+          <button type="button" class="tab-item-btn" id="tabBtnSettings" onclick="switchTabPane('settings')">
+            <i class="fa-solid fa-sliders"></i> Info Konser & WA
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT AREA -->
+      <main class="tab-panel-container">
+
+        <!-- PANE 1: TRANSAKSI (Matches Photo Filter & List) -->
+        <section id="paneOrders">
+          <!-- Filter Search Box -->
+          <div class="search-filter-card">
+            <div class="search-input-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="filter-input" id="searchOrdersInput" placeholder="Cari Order ID, Nama, Email, Phone..." oninput="filterOrders()">
+            </div>
+            <select class="filter-select" id="statusFilterSelect" onchange="filterOrders()">
+              <option value="ALL">Semua Status</option>
+              <option value="PAID">PAID (Lunas)</option>
+              <option value="PENDING">PENDING (Menunggu)</option>
+              <option value="CANCEL">CANCEL (Dibatalkan)</option>
+            </select>
+            <div class="filter-btn-row">
+              <button type="button" class="btn-filter-submit" onclick="filterOrders()">Filter</button>
+              <button type="button" class="btn-filter-reset" onclick="resetOrderFilter()">Reset</button>
+            </div>
+          </div>
+
+          <!-- Orders List -->
+          <div id="ordersListRender">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- PANE 2: PENGUNJUNG & APA SAJA YANG DIKLIK PENGUNJUNG -->
+        <section id="paneAnalytics" style="display: none;">
+          <!-- Traffic Stats Box -->
+          <div class="traffic-overview-box">
+            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #a5b4fc; margin-bottom: 4px;">Live Analytics</div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <h3 style="font-size: 2rem; font-weight: 800;" id="trafficTotalViews">0</h3>
+                <span style="font-size: 0.85rem; color: #c7d2fe;">Total Kunjungan Halaman</span>
+              </div>
+              <div style="text-align: right;">
+                <h4 style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;" id="trafficUniqueUsers">0</h4>
+                <span style="font-size: 0.85rem; color: #bae6fd;">Pengunjung Unik</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Logs (Apa Saja yang Diklik Pengunjung) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+            <h4 style="font-size: 0.95rem; font-weight: 800; color: #0f172a;">
+              <i class="fa-solid fa-computer-mouse" style="color: var(--primary);"></i> Aktivitas & Klik Pengunjung
+            </h4>
+            <button type="button" style="border: none; background: transparent; color: #e11d48; font-size: 0.78rem; font-weight: 700; cursor: pointer;" onclick="handleClearLogs()">
+              Bersihkan Log
+            </button>
+          </div>
+
+          <div class="log-list-container" id="clickLogsContainer">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- PANE 3: KELOLA HARGA TIKET & KATEGORI -->
+        <section id="panePricing" style="display: none;">
+          <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+            Ubah harga, nama, benefit, dan warna kategori tiket. Perubahan akan langsung tampil di website utama.
+          </p>
+          <div id="pricingEditorCards">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- PANE 4: REKENING & QRIS PEMBAYARAN -->
+        <section id="paneBank" style="display: none;">
+          <div class="search-filter-card">
+            <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a;">
+              <i class="fa-solid fa-building-columns" style="color: #2563eb;"></i> Pengaturan Rekening Bank & QRIS
+            </h4>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Nama Bank</label>
+              <input type="text" class="input-clean" id="cfgBankName" placeholder="Contoh: BCA / Mandiri / Maybank">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Nomor Rekening</label>
+              <input type="text" class="input-clean" id="cfgBankNumber" placeholder="Contoh: 8735091241">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Atas Nama (Account Holder)</label>
+              <input type="text" class="input-clean" id="cfgBankHolder" placeholder="Contoh: GLOBAL TICKET CENTER">
+            </div>
+          </div>
+        </section>
+
+        <!-- PANE 5: INFORMASI KONSER & WHATSAPP -->
+        <section id="paneSettings" style="display: none;">
+          <div class="search-filter-card">
+            <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a;">
+              <i class="fa-brands fa-whatsapp" style="color: #16a34a;"></i> Kontak WhatsApp & Judul Konser
+            </h4>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Nomor WhatsApp Tujuan Pemesanan (Tanpa tanda +)</label>
+              <input type="text" class="input-clean" id="cfgWaNum" placeholder="Contoh: 6285696525184">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Judul Event Konser</label>
+              <input type="text" class="input-clean" id="cfgEventTitle">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Tanggal Acara</label>
+              <input type="text" class="input-clean" id="cfgEventDates">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Lokasi / Stadium</label>
+              <input type="text" class="input-clean" id="cfgEventVenue">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="font-size: 0.8rem; font-weight: 700; color: #475569;">Waktu Konser</label>
+              <input type="text" class="input-clean" id="cfgEventTimes">
+            </div>
+          </div>
+
+          <!-- Ganti Password -->
+          <div class="search-filter-card" style="margin-top: 1rem;">
+            <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a;">
+              <i class="fa-solid fa-lock" style="color: #be123c;"></i> Ganti Password Admin
+            </h4>
+            <div style="margin-bottom: 10px;">
+              <input type="text" class="input-clean" id="newAdminUser" placeholder="Username Baru">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <input type="password" class="input-clean" id="newAdminPass" placeholder="Password Baru">
+            </div>
+            <button type="button" class="btn-filter-submit" onclick="handleUpdatePassword()" style="background: #0f172a;">
+              Perbarui Password
+            </button>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Floating Save Bar for Pricing & Settings -->
+      <div id="floatingSaveBar" class="bottom-save-pill" style="display: none;">
+        <span style="font-size: 0.82rem;">Ada perubahan konten/harga?</span>
+        <button type="button" class="btn-save-glow" onclick="saveAllSiteSettings()">
+          <i class="fa-solid fa-check"></i> Simpan Perubahan
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Load site config helper -->
+  <script src="bts_site_config.js"></script>
+
+  <script>
+    let appConfig = null;
+    let allOrders = [];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (checkAdminAuth()) {
+        showDashboard();
+      } else {
+        showLogin();
+      }
+    });
+
+    function showLogin() {
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('dashboardScreen').style.display = 'none';
+    }
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboardScreen').style.display = 'flex';
+
+      loadAllData();
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('loginUser').value.trim();
+      const p = document.getElementById('loginPass').value.trim();
+      const res = loginAdmin(u, p);
+      if (res.success) {
+        showToast("Login Berhasil!");
+        showDashboard();
+      } else {
+        alert(res.message);
+      }
+    }
+
+    function handleLogout() {
+      if (confirm("Keluar dari panel admin?")) {
+        logoutAdmin();
+        showLogin();
+      }
+    }
+
+    // Switch Tabs
+    function switchTabPane(pane) {
+      const panes = ['orders', 'analytics', 'pricing', 'bank', 'settings'];
+      panes.forEach(p => {
+        const btn = document.getElementById('tabBtn' + p.charAt(0).toUpperCase() + p.slice(1));
+        const view = document.getElementById('pane' + p.charAt(0).toUpperCase() + p.slice(1));
+        if (btn) btn.classList.remove('active');
+        if (view) view.style.display = 'none';
+      });
+
+      const activeBtn = document.getElementById('tabBtn' + pane.charAt(0).toUpperCase() + pane.slice(1));
+      const activePane = document.getElementById('pane' + pane.charAt(0).toUpperCase() + pane.slice(1));
+      if (activeBtn) activeBtn.classList.add('active');
+      if (activePane) activePane.style.display = 'block';
+
+      // Show save bar if on pricing, bank, or settings
+      const saveBar = document.getElementById('floatingSaveBar');
+      if (pane === 'pricing' || pane === 'bank' || pane === 'settings') {
+        saveBar.style.display = 'flex';
+      } else {
+        saveBar.style.display = 'none';
+      }
+
+      if (pane === 'analytics') {
+        renderAnalytics();
+      }
+    }
+
+    function loadAllData() {
+      appConfig = getSiteConfig();
+      allOrders = getOrders();
+
+      // Update Summary Cards
+      updateStatsCards();
+
+      // Render Orders
+      renderOrdersList(allOrders);
+
+      // Render Pricing Editor
+      renderPricingEditor();
+
+      // Populate Settings & Bank Info
+      populateSettings();
+    }
+
+    // Auto-update real-time when a visitor visits or clicks on index.html
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'BTS_ORDERS_LIST_V1' || e.key === 'BTS_ANALYTICS_V1' || e.key === 'BTS_CLICK_LOGS_V1') {
+        allOrders = getOrders();
+        updateStatsCards();
+        filterOrders();
+        renderAnalytics();
+      }
+    });
+
+    // Also auto-refresh every 2.5 seconds if tab is active
+    setInterval(() => {
+      if (checkAdminAuth()) {
+        allOrders = getOrders();
+        updateStatsCards();
+        const activeAnalytics = document.getElementById('paneAnalytics');
+        if (activeAnalytics && activeAnalytics.style.display !== 'none') {
+          renderAnalytics();
+        }
+      }
+    }, 2500);
+
+    function updateStatsCards() {
+      const totalCount = allOrders.length;
+      const paidOrders = allOrders.filter(o => o.status === 'PAID');
+      const pendingOrders = allOrders.filter(o => o.status === 'PENDING');
+
+      // Calculate total paid revenue
+      const totalPaidRevenue = paidOrders.reduce((sum, item) => sum + (item.priceNumber || 0), 0);
+
+      document.getElementById('statTotalOrders').innerText = totalCount;
+      document.getElementById('statRevenue').innerText = 'Rp' + totalPaidRevenue.toLocaleString('id-ID');
+      document.getElementById('statTicketsSold').innerText = paidOrders.length;
+      document.getElementById('statPendingOrders').innerText = pendingOrders.length;
+    }
+
+    function renderOrdersList(orders) {
+      const container = document.getElementById('ordersListRender');
+      container.innerHTML = '';
+
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.9rem;">
+            <i class="fa-solid fa-inbox" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+            Belum ada transaksi yang sesuai filter.
+          </div>
+        `;
+        return;
+      }
+
+      orders.forEach(order => {
+        let statusClass = 'status-pending';
+        if (order.status === 'PAID') statusClass = 'status-paid';
+        if (order.status === 'CANCEL') statusClass = 'status-cancel';
+
+        const item = document.createElement('div');
+        item.className = 'order-item-card';
+        item.innerHTML = `
+          <div class="order-header-row">
+            <span class="order-id-badge">${order.id}</span>
+            <span class="status-badge ${statusClass}">${order.status}</span>
+          </div>
+          <div class="order-details-meta">
+            <strong style="color: #0f172a; font-size: 0.92rem;">${order.customerName}</strong> • ${order.phone}<br>
+            <span>${order.ticketName} (${order.seat})</span> • <strong style="color: #be123c;">${order.priceFormatted}</strong><br>
+            <span style="font-size: 0.75rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> ${order.date}</span>
+          </div>
+          <div class="order-actions-bar">
+            ${order.status !== 'PAID' ? `<button type="button" class="btn-order-action paid" onclick="changeStatus('${order.id}', 'PAID')"><i class="fa-solid fa-check"></i> Tandai Lunas</button>` : ''}
+            ${order.status !== 'PENDING' ? `<button type="button" class="btn-order-action" onclick="changeStatus('${order.id}', 'PENDING')"><i class="fa-solid fa-clock"></i> Set Pending</button>` : ''}
+            <button type="button" class="btn-order-action" style="color: #dc2626;" onclick="handleDeleteOrder('${order.id}')"><i class="fa-solid fa-trash"></i> Hapus</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function filterOrders() {
+      const keyword = document.getElementById('searchOrdersInput').value.toLowerCase().trim();
+      const status = document.getElementById('statusFilterSelect').value;
+
+      const filtered = allOrders.filter(o => {
+        const matchesKeyword = !keyword || 
+          (o.id && o.id.toLowerCase().includes(keyword)) ||
+          (o.customerName && o.customerName.toLowerCase().includes(keyword)) ||
+          (o.phone && o.phone.toLowerCase().includes(keyword)) ||
+          (o.email && o.email.toLowerCase().includes(keyword));
+
+        const matchesStatus = (status === 'ALL') || (o.status === status);
+        return matchesKeyword && matchesStatus;
+      });
+
+      renderOrdersList(filtered);
+    }
+
+    function resetOrderFilter() {
+      document.getElementById('searchOrdersInput').value = '';
+      document.getElementById('statusFilterSelect').value = 'ALL';
+      renderOrdersList(allOrders);
+    }
+
+    function changeStatus(orderId, newStatus) {
+      if (updateOrderStatus(orderId, newStatus)) {
+        allOrders = getOrders();
+        updateStatsCards();
+        filterOrders();
+        showToast("Status pesanan " + orderId + " diubah jadi " + newStatus);
+      }
+    }
+
+    function handleDeleteOrder(orderId) {
+      if (confirm("Hapus data pesanan " + orderId + "?")) {
+        if (deleteOrder(orderId)) {
+          allOrders = getOrders();
+          updateStatsCards();
+          filterOrders();
+          showToast("Pesanan berhasil dihapus.");
+        }
+      }
+    }
+
+    function exportOrdersToCSV() {
+      if (allOrders.length === 0) {
+        alert("Belum ada data transaksi untuk diekspor!");
+        return;
+      }
+
+      let csv = "Order ID,Tanggal,Nama,Telepon,Email,Tiket,Nomor Kursi,Harga,Nominal (IDR),Status\n";
+      allOrders.forEach(o => {
+        csv += `"${o.id}","${o.date}","${o.customerName}","${o.phone}","${o.email || ''}","${o.ticketName}","${o.seat}","${o.priceFormatted}","${o.priceNumber || 0}","${o.status}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `GTC_Transaksi_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Analytics / Traffic & Clicks
+    function renderAnalytics() {
+      const stats = getVisitorStats();
+      const logs = getClickLogs();
+
+      document.getElementById('trafficTotalViews').innerText = (stats.totalViews || 0).toLocaleString();
+      document.getElementById('trafficUniqueUsers').innerText = (stats.uniqueVisitors || 0).toLocaleString();
+
+      const container = document.getElementById('clickLogsContainer');
+      container.innerHTML = '';
+
+      if (logs.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.85rem;">
+            Belum ada aktivitas klik terekam. Buka website dan klik tiket untuk melihat log masuk secara realtime.
+          </div>
+        `;
+        return;
+      }
+
+      logs.forEach(log => {
+        const row = document.createElement('div');
+        row.className = 'log-row-item';
+        row.innerHTML = `
+          <div>
+            <span class="log-action-tag"><i class="fa-solid fa-arrow-pointer" style="color: #e11d48; margin-right: 4px;"></i> ${escapeHtml(log.action)}</span>
+            <span style="color: #64748b; font-size: 0.78rem;">${escapeHtml(log.details)}</span>
+          </div>
+          <span class="log-time-tag">${log.timestamp}</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function handleClearLogs() {
+      if (confirm("Bersihkan seluruh log klik pengunjung?")) {
+        clearClickLogs();
+        renderAnalytics();
+        showToast("Log klik berhasil dibersihkan.");
+      }
+    }
+
+    // Pricing Editor
+    function renderPricingEditor() {
+      const container = document.getElementById('pricingEditorCards');
+      container.innerHTML = '';
+
+      appConfig.tickets.forEach((t, i) => {
+        const card = document.createElement('div');
+        card.className = 'ticket-edit-card';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <input type="color" id="tcColor_${i}" value="${t.badgeColor || '#e11d48'}" style="width: 24px; height: 24px; border-radius: 50%; border: none; cursor: pointer;">
+              <input type="text" class="input-clean" id="tcName_${i}" value="${escapeHtml(t.name)}" style="font-weight: 800; width: 180px;">
+            </div>
+            <span style="font-size: 0.75rem; background: #f1f5f9; padding: 3px 8px; border-radius: 6px; font-weight: 700; color: #475569;">
+              ${t.key} ${t.isVip ? '★ VIP' : ''}
+            </span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Harga Tiket (Tampil di Web)</label>
+            <input type="text" class="input-clean" id="tcPrice_${i}" value="${escapeHtml(t.price)}" style="font-weight: 800; color: #be123c;">
+          </div>
+          <div>
+            <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Deskripsi Area Duduk</label>
+            <input type="text" class="input-clean" id="tcDesc1_${i}" value="${escapeHtml(t.desc1)}">
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function populateSettings() {
+      const g = appConfig.general || {};
+      const b = appConfig.bankInfo || {};
+
+      document.getElementById('cfgWaNum').value = g.waNumber || '';
+      document.getElementById('cfgEventTitle').value = g.eventTitle || '';
+      document.getElementById('cfgEventDates').value = g.eventDates || '';
+      document.getElementById('cfgEventVenue').value = g.eventVenue || '';
+      document.getElementById('cfgEventTimes').value = g.eventTimes || '';
+
+      document.getElementById('cfgBankName').value = b.bankName || 'BCA';
+      document.getElementById('cfgBankNumber').value = b.accountNumber || '';
+      document.getElementById('cfgBankHolder').value = b.accountHolder || '';
+    }
+
+    function saveAllSiteSettings() {
+      // 1. Tickets
+      appConfig.tickets.forEach((t, i) => {
+        const nameEl = document.getElementById(`tcName_${i}`);
+        const priceEl = document.getElementById(`tcPrice_${i}`);
+        const colorEl = document.getElementById(`tcColor_${i}`);
+        const desc1El = document.getElementById(`tcDesc1_${i}`);
+        if (nameEl) t.name = nameEl.value.trim();
+        if (priceEl) t.price = priceEl.value.trim();
+        if (colorEl) t.badgeColor = colorEl.value;
+        if (desc1El) t.desc1 = desc1El.value.trim();
+      });
+
+      // 2. Settings & WA
+      appConfig.general.waNumber = document.getElementById('cfgWaNum').value.trim();
+      appConfig.general.eventTitle = document.getElementById('cfgEventTitle').value.trim();
+      appConfig.general.eventDates = document.getElementById('cfgEventDates').value.trim();
+      appConfig.general.eventVenue = document.getElementById('cfgEventVenue').value.trim();
+      appConfig.general.eventTimes = document.getElementById('cfgEventTimes').value.trim();
+
+      // 3. Bank Info
+      appConfig.bankInfo.bankName = document.getElementById('cfgBankName').value.trim();
+      appConfig.bankInfo.accountNumber = document.getElementById('cfgBankNumber').value.trim();
+      appConfig.bankInfo.accountHolder = document.getElementById('cfgBankHolder').value.trim();
+
+      if (saveSiteConfig(appConfig)) {
+        showToast("Seluruh pengaturan berhasil disimpan ke website!");
+      }
+    }
+
+    function handleUpdatePassword() {
+      const u = document.getElementById('newAdminUser').value.trim();
+      const p = document.getElementById('newAdminPass').value.trim();
+      if (!u || !p) {
+        alert("Mohon isi username dan password baru!");
+        return;
+      }
+      updateAdminCredentials(u, p);
+      showToast("Username & password admin berhasil diperbarui!");
+      document.getElementById('newAdminUser').value = '';
+      document.getElementById('newAdminPass').value = '';
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toastNotification');
+      document.getElementById('toastMsg').innerText = msg;
+      el.style.display = 'flex';
+      setTimeout(() => {
+        el.style.display = 'none';
+      }, 3000);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+  </script>
+</body>
+</html>
